@@ -21,7 +21,7 @@ The app is static HTML, CSS, and JavaScript.
 Open this file in your browser:
 
 #+BEGIN_SRC text
-web/index.html
+docs/index.html
 #+END_SRC
 
 You can also serve it locally if you have Python installed:
@@ -33,19 +33,19 @@ python -m http.server 8080
 Then open:
 
 #+BEGIN_SRC text
-http://localhost:8080/web/
+http://localhost:8080/docs/
 #+END_SRC
 
 * App Files
 
-- =web/index.html= - main app shell
-- =web/styles.css= - styling
-- =web/app.js= - app logic
-- =web/questions.js= - regular question bank
-- =web/hard-questions.js= - hard question session
-- =web/hard-questions-part2.js= - hard question session, part 2
-- =web/hard-questions-part3.js= - hard question session, part 3
-- =web/flashcards.js= - flashcard decks
+- =docs/index.html= - GitHub Pages app shell
+- =docs/styles.css= - styling
+- =docs/app.js= - app logic
+- =docs/questions.js= - regular question bank
+- =docs/hard-questions.js= - hard question session
+- =docs/hard-questions-part2.js= - hard question session, part 2
+- =docs/hard-questions-part3.js= - hard question session, part 3
+- =docs/flashcards.js= - flashcard decks
 
 * Current Content
 
@@ -59,17 +59,12 @@ http://localhost:8080/web/
 
 This app can be hosted on GitHub Pages.
 
-The simplest approach is:
+The repo now includes a =docs/= copy that is ready for GitHub Pages.
 
-1. Move =web/= to =docs/= if you want GitHub Pages to publish directly from the
-   repository branch settings.
-2. Push the repository to GitHub.
-3. In GitHub, open =Settings -> Pages=.
-4. Choose =Deploy from a branch=.
-5. Select the =main= branch and the =/docs= folder.
-
-If you keep the app in =web/=, GitHub Pages may not offer that folder directly,
-depending on the Pages setup you use.
+1. Push the repository to GitHub.
+2. In GitHub, open =Settings -> Pages=.
+3. Choose =Deploy from a branch=.
+4. Select the =main= branch and the =/docs= folder.
 
 * Notes
 
