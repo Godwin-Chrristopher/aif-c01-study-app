@@ -203,9 +203,16 @@ const cheatSheet = [
   },
 ];
 
+const domainFlashcardDeckMap = {
+  1: ["SageMaker & ML Lifecycle", "Inference Types", "Evaluation Metrics"],
+  2: ["Fundamentals of Generative AI", "Prompt Engineering & LLM Behavior"],
+  3: ["Model Customization", "AWS AI Services", "Common Traps"],
+  4: ["Responsible AI", "Common Traps"],
+  5: ["Security & Governance", "AWS AI Services"],
+};
+
 const state = {
   selectedDomain: 0,
-  selectedDeck: 0,
   selectedCard: 0,
   selectedQuestion: 0,
   selectedHardQuestion: 0,
@@ -226,7 +233,6 @@ const els = {
   summary: document.querySelector("#selected-domain-summary"),
   aws: document.querySelector("#selected-domain-aws"),
   markComplete: document.querySelector("#mark-complete"),
-  deckList: document.querySelector("#deck-list"),
   flashcard: document.querySelector("#flashcard"),
   flashcardText: document.querySelector("#flashcard-text"),
   flipCard: document.querySelector("#flip-card"),
@@ -308,28 +314,20 @@ function renderSelectedDomain() {
   els.markComplete.title = state.completed.has(domain.id)
     ? "Mark domain incomplete"
     : "Mark domain complete";
-  renderDecks();
   renderCard();
   renderQuiz();
 }
 
-function renderDecks() {
-  els.deckList.innerHTML = "";
-  getDecks().forEach((deck, index) => {
-    const button = document.createElement("button");
-    button.className = `deck-button${index === state.selectedDeck ? " is-active" : ""}`;
-    button.type = "button";
-    button.textContent = deck.name;
-    button.addEventListener("click", () => selectDeck(index));
-    els.deckList.appendChild(button);
-  });
-}
-
 function renderCard() {
-  const deck = getDecks()[state.selectedDeck];
-  const card = deck.cards[state.selectedCard];
+  const cards = getDomainFlashcards();
+  const card = cards[state.selectedCard];
   const label = els.flashcard.querySelector(".flashcard__label");
-  label.textContent = `${deck.name} · ${state.selectedCard + 1} of ${deck.cards.length} · ${
+  if (!card) {
+    label.textContent = "Flashcards";
+    els.flashcardText.textContent = "No flashcards are mapped to this domain yet.";
+    return;
+  }
+  label.textContent = `${card.source} · ${state.selectedCard + 1} of ${cards.length} · ${
     state.cardFlipped ? "Answer" : "Question"
   }`;
   els.flashcardText.textContent = state.cardFlipped ? card.back : card.front;
@@ -431,14 +429,6 @@ function selectDomain(index) {
   render();
 }
 
-function selectDeck(index) {
-  state.selectedDeck = index;
-  state.selectedCard = 0;
-  state.cardFlipped = false;
-  renderDecks();
-  renderCard();
-}
-
 function answerQuiz(index) {
   const question = getDomainQuestions()[state.selectedQuestion];
   if (!question) {
@@ -470,13 +460,23 @@ function getDomainQuestions() {
   return questionBank.filter((question) => question.domain === domainId);
 }
 
-function getDecks() {
+function getDomainFlashcards() {
+  const domainId = domains[state.selectedDomain].id;
   if (flashcardDecks.length) {
-    return flashcardDecks;
+    const allowedDecks = new Set(domainFlashcardDeckMap[domainId] || []);
+    return flashcardDecks
+      .filter((deck) => allowedDecks.has(deck.name))
+      .flatMap((deck) =>
+        deck.cards.map((card) => ({
+          ...card,
+          source: deck.name,
+        }))
+      );
   }
-  return domains.map((domain) => ({
-    name: domain.title,
-    cards: domain.cards.map(([front, back]) => ({ front, back })),
+  return domains[state.selectedDomain].cards.map(([front, back]) => ({
+    front,
+    back,
+    source: domains[state.selectedDomain].title,
   }));
 }
 
@@ -622,14 +622,20 @@ els.flashcard.addEventListener("keydown", (event) => {
 });
 
 els.previousCard.addEventListener("click", () => {
-  const cards = getDecks()[state.selectedDeck].cards;
+  const cards = getDomainFlashcards();
+  if (!cards.length) {
+    return;
+  }
   state.selectedCard = (state.selectedCard - 1 + cards.length) % cards.length;
   state.cardFlipped = false;
   renderCard();
 });
 
 els.nextCard.addEventListener("click", () => {
-  const cards = getDecks()[state.selectedDeck].cards;
+  const cards = getDomainFlashcards();
+  if (!cards.length) {
+    return;
+  }
   state.selectedCard = (state.selectedCard + 1) % cards.length;
   state.cardFlipped = false;
   renderCard();

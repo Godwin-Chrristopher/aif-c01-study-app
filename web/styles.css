@@ -323,29 +323,6 @@ h1 {
   padding: 28px;
 }
 
-.deck-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.deck-button {
-  min-height: 38px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: #fbfdfb;
-  color: var(--green-deep);
-  padding: 0 12px;
-  font-size: 0.88rem;
-  font-weight: 800;
-}
-
-.deck-button.is-active {
-  border-color: var(--green);
-  background: var(--mint);
-}
-
 .flashcard__label {
   color: var(--green);
   font-size: 0.75rem;
