@@ -12,8 +12,6 @@ The app includes:
 - A hard-question session for mock exam review
 - A compact cheat sheet for last-minute revision
 
-[[file:resources/test-image-640x.png]]
-
 * Run Locally
 
 The app is static HTML, CSS, and JavaScript.
