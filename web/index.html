@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AIF-C01 Study App</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="app-title">
+        <img
+          class="hero__image"
+          src="../resources/test-image-640x.png"
+          alt="AWS AI practitioner study visual"
+        />
+        <div class="hero__content">
+          <p class="eyebrow">AWS Certified AI Practitioner</p>
+          <h1 id="app-title">AIF-C01 Study App</h1>
+          <p>
+            Review the exam domains, flip through focused cards, and answer quick
+            checks pulled from this repository's Clojure study modules.
+          </p>
+          <div class="hero__actions" aria-label="Study actions">
+            <button class="primary-action" id="start-review" type="button">
+              Start Review
+            </button>
+            <button class="secondary-action" id="reset-progress" type="button">
+              Reset Progress
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="progress-strip" aria-label="Study progress">
+        <div>
+          <span id="completed-count">0</span>
+          <small>domains complete</small>
+        </div>
+        <div>
+          <span id="card-count">0</span>
+          <small>cards reviewed</small>
+        </div>
+        <div>
+          <span id="quiz-score">0%</span>
+          <small>quick check score</small>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Study workspace">
+        <nav class="domain-list" id="domain-list" aria-label="Exam domains"></nav>
+
+        <article class="study-panel">
+          <div class="panel-heading">
+            <p class="eyebrow" id="selected-domain-kicker">Domain 1</p>
+            <h2 id="selected-domain-title">Fundamentals of AI and ML</h2>
+            <button class="icon-button" id="mark-complete" type="button" title="Mark domain complete">
+              ✓
+            </button>
+          </div>
+
+          <div class="insight-grid">
+            <div>
+              <h3>Focus</h3>
+              <p id="selected-domain-summary"></p>
+            </div>
+            <div>
+              <h3>AWS Lens</h3>
+              <p id="selected-domain-aws"></p>
+            </div>
+          </div>
+
+          <div class="tabs" role="tablist" aria-label="Study modes">
+            <button class="tab is-active" id="tab-cards" type="button">Cards</button>
+            <button class="tab" id="tab-quiz" type="button">Quick Check</button>
+            <button class="tab" id="tab-hard" type="button">Hard Questions</button>
+            <button class="tab" id="tab-cheat-sheet" type="button">Cheat Sheet</button>
+          </div>
+
+          <section class="mode is-active" id="cards-mode" aria-label="Flashcards">
+            <div class="deck-list" id="deck-list" aria-label="Flashcard decks"></div>
+            <div class="flashcard" id="flashcard" tabindex="0" role="button" aria-live="polite">
+              <span class="flashcard__label">Question</span>
+              <p id="flashcard-text"></p>
+            </div>
+            <div class="card-controls">
+              <button class="secondary-action" id="previous-card" type="button">Previous</button>
+              <button class="primary-action" id="flip-card" type="button">Flip Card</button>
+              <button class="secondary-action" id="next-card" type="button">Next</button>
+            </div>
+          </section>
+
+          <section class="mode" id="quiz-mode" aria-label="Quick check">
+            <div class="quiz-meta">
+              <span id="quiz-position"></span>
+              <span id="quiz-source"></span>
+            </div>
+            <p class="quiz-question" id="quiz-question"></p>
+            <div class="quiz-options" id="quiz-options"></div>
+            <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+            <div class="card-controls">
+              <button class="secondary-action" id="previous-question" type="button">Previous</button>
+              <button class="primary-action" id="next-question" type="button">Next Question</button>
+            </div>
+          </section>
+
+          <section class="mode" id="cheat-sheet-mode" aria-label="Crack sheet">
+            <div class="cheat-sheet" id="cheat-sheet"></div>
+          </section>
+
+          <section class="mode" id="hard-mode" aria-label="Hard questions">
+            <div class="quiz-meta">
+              <span id="hard-position"></span>
+              <span id="hard-source"></span>
+              <span id="hard-score"></span>
+            </div>
+            <p class="quiz-question" id="hard-question"></p>
+            <div class="quiz-options" id="hard-options"></div>
+            <p class="quiz-feedback" id="hard-feedback" aria-live="polite"></p>
+            <div class="card-controls">
+              <button class="secondary-action" id="previous-hard-question" type="button">Previous</button>
+              <button class="primary-action" id="next-hard-question" type="button">Next Question</button>
+            </div>
+          </section>
+        </article>
+      </section>
+    </main>
+
+    <script src="./questions.js"></script>
+    <script src="./flashcards.js"></script>
+    <script src="./hard-questions.js"></script>
+    <script src="./hard-questions-part2.js"></script>
+    <script src="./hard-questions-part3.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
