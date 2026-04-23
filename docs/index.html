@@ -22,12 +22,22 @@
             checks pulled from this repository's Clojure study modules.
           </p>
           <div class="hero__actions" aria-label="Study actions">
-            <button class="primary-action" id="start-review" type="button">
-              Start Review
-            </button>
-            <button class="secondary-action" id="reset-progress" type="button">
-              Reset Progress
-            </button>
+            <div class="hero__actions-left">
+              <button class="primary-action" id="start-review" type="button">
+                Start Review
+              </button>
+              <button class="secondary-action" id="reset-progress" type="button">
+                Reset Progress
+              </button>
+            </div>
+            <div class="hero__actions-right">
+              <button class="secondary-action" id="open-cheat-sheet" type="button">
+                Cheat Sheet
+              </button>
+              <button class="primary-action" id="open-boss-level" type="button">
+                Boss Level
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -47,7 +57,7 @@
         </div>
       </section>
 
-      <section class="workspace" aria-label="Study workspace">
+      <section class="workspace" id="workspace" aria-label="Study workspace">
         <nav class="domain-list" id="domain-list" aria-label="Exam domains"></nav>
 
         <article class="study-panel">
@@ -73,8 +83,6 @@
           <div class="tabs" role="tablist" aria-label="Study modes">
             <button class="tab is-active" id="tab-cards" type="button">Cards</button>
             <button class="tab" id="tab-quiz" type="button">Quick Check</button>
-            <button class="tab" id="tab-hard" type="button">Hard Questions</button>
-            <button class="tab" id="tab-cheat-sheet" type="button">Cheat Sheet</button>
           </div>
 
           <section class="mode is-active" id="cards-mode" aria-label="Flashcards">
@@ -104,10 +112,18 @@
           </section>
 
           <section class="mode" id="cheat-sheet-mode" aria-label="Crack sheet">
+            <div class="standalone-header">
+              <p class="eyebrow">Separate Page</p>
+              <h3>Cheat Sheet</h3>
+            </div>
             <div class="cheat-sheet" id="cheat-sheet"></div>
           </section>
 
-          <section class="mode" id="hard-mode" aria-label="Hard questions">
+          <section class="mode" id="hard-mode" aria-label="Boss level questions">
+            <div class="standalone-header">
+              <p class="eyebrow">Separate Page</p>
+              <h3>Boss Level</h3>
+            </div>
             <div class="quiz-meta">
               <span id="hard-position"></span>
               <span id="hard-source"></span>

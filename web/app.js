@@ -216,6 +216,7 @@ const state = {
   selectedCard: 0,
   selectedQuestion: 0,
   selectedHardQuestion: 0,
+  currentMode: "cards",
   cardFlipped: false,
   completed: new Set(JSON.parse(localStorage.getItem("aifCompleted") || "[]")),
   reviewedCards: Number(localStorage.getItem("aifReviewedCards") || 0),
@@ -240,12 +241,11 @@ const els = {
   nextCard: document.querySelector("#next-card"),
   tabCards: document.querySelector("#tab-cards"),
   tabQuiz: document.querySelector("#tab-quiz"),
-  tabHard: document.querySelector("#tab-hard"),
-  tabCheatSheet: document.querySelector("#tab-cheat-sheet"),
   cardsMode: document.querySelector("#cards-mode"),
   quizMode: document.querySelector("#quiz-mode"),
   hardMode: document.querySelector("#hard-mode"),
   cheatSheetMode: document.querySelector("#cheat-sheet-mode"),
+  workspace: document.querySelector("#workspace"),
   cheatSheet: document.querySelector("#cheat-sheet"),
   quizPosition: document.querySelector("#quiz-position"),
   quizSource: document.querySelector("#quiz-source"),
@@ -264,6 +264,8 @@ const els = {
   nextHardQuestion: document.querySelector("#next-hard-question"),
   startReview: document.querySelector("#start-review"),
   resetProgress: document.querySelector("#reset-progress"),
+  openBossLevel: document.querySelector("#open-boss-level"),
+  openCheatSheet: document.querySelector("#open-cheat-sheet"),
 };
 
 const questionBank = window.AIF_QUESTIONS || [];
@@ -394,8 +396,8 @@ function renderHardQuiz() {
   const answerRecord = getHardAnswerRecord(question.id);
   const answeredCorrectly = answerRecord?.correct;
   els.hardPosition.textContent = `${state.selectedHardQuestion + 1} of ${hardQuestionBank.length}`;
-  els.hardSource.textContent = question.source;
-  els.hardScore.textContent = `${score}% hard score`;
+  els.hardSource.textContent = `Boss Level`;
+  els.hardScore.textContent = `${score}% boss score`;
   els.hardQuestion.textContent = question.question;
   els.hardFeedback.textContent =
     answeredCorrectly === undefined
@@ -525,18 +527,20 @@ function normalizeQuestion(question) {
 }
 
 function setMode(mode) {
+  state.currentMode = mode;
   const isCards = mode === "cards";
   const isQuiz = mode === "quiz";
   const isHard = mode === "hard";
   const isCheatSheet = mode === "cheat-sheet";
   els.tabCards.classList.toggle("is-active", isCards);
   els.tabQuiz.classList.toggle("is-active", isQuiz);
-  els.tabHard.classList.toggle("is-active", isHard);
-  els.tabCheatSheet.classList.toggle("is-active", isCheatSheet);
   els.cardsMode.classList.toggle("is-active", isCards);
   els.quizMode.classList.toggle("is-active", isQuiz);
   els.hardMode.classList.toggle("is-active", isHard);
   els.cheatSheetMode.classList.toggle("is-active", isCheatSheet);
+  els.workspace.classList.toggle("is-standalone", isHard || isCheatSheet);
+  els.openBossLevel.classList.toggle("is-active", isHard);
+  els.openCheatSheet.classList.toggle("is-active", isCheatSheet);
 }
 
 function render() {
@@ -678,11 +682,20 @@ els.nextHardQuestion.addEventListener("click", () => {
 
 els.tabCards.addEventListener("click", () => setMode("cards"));
 els.tabQuiz.addEventListener("click", () => setMode("quiz"));
-els.tabHard.addEventListener("click", () => setMode("hard"));
-els.tabCheatSheet.addEventListener("click", () => setMode("cheat-sheet"));
 
 els.startReview.addEventListener("click", () => {
+  setMode("cards");
   document.querySelector(".workspace").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+els.openBossLevel.addEventListener("click", () => {
+  setMode("hard");
+  els.workspace.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+els.openCheatSheet.addEventListener("click", () => {
+  setMode("cheat-sheet");
+  els.workspace.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
 els.resetProgress.addEventListener("click", () => {
@@ -695,3 +708,4 @@ els.resetProgress.addEventListener("click", () => {
 });
 
 render();
+setMode(state.currentMode);
