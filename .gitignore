@@ -1,0 +1,47 @@
+/target
+/classes
+/checkouts
+profiles.clj
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+/.prepl-port
+.hgignore
+.hg/
+.envrc
+*~
+.rebel_readline_history
+CHANGELOG.md
+_.sh
+#*#
+.eastwood
+
+
+2310.07064.pdf
+README.odt
+example.md
+glue-script.py
+trust-policy-glue.json
+trust-policy-sagemaker.json
+
+# Nix shell temporary files
+.zshrc
+.zsh_history
+.zshrc.temp
+.zcompdump*
+.nix-shell/
+# Claude local files
+.claude/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*\.class
+
+# Generated files
+*.odt
+*.png
+worktrees/
